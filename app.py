@@ -22,7 +22,13 @@ def index():
 def upload():
     file = request.files['file']
     blob_client = blob_service_client.get_blob_client(container=container_name, blob=file.filename)
-    blob_client.upload_blob(file)
+    
+    # Read the file in binary mode
+    file_data = file.read()
+    
+    # Upload the file data
+    blob_client.upload_blob(file_data, overwrite=True)
+    
     return redirect(url_for('index'))
 
 @app.route('/download/<blob_name>')
