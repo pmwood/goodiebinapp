@@ -7,16 +7,20 @@
 </head>
 <body>
     <h1>Azure Blob Storage</h1>
-    <form action="/upload" method="post" enctype="multipart/form-data">
-        <input type="file" name="file">
-        <button type="submit">Upload</button>
-    </form>
-    <ul>
-        {% for blob in blobs %}
-        <li>
-            <a href="{{ url_for('download', blob_name=blob.name) }}">{{ blob.name }}</a>
-        </li>
-        {% endfor %}
-    </ul>
+    {% if user %}
+        <p>Welcome, {{ user['name'] }}!</p>
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <input type="file" name="file">
+            <button type="submit">Upload</button>
+        </form>
+        <ul>
+            {% for blob in blobs %}
+                <li>{{ blob.name }} - <a href="{{ url_for('download', blob_name=blob.name) }}">Download</a></li>
+            {% endfor %}
+        </ul>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    {% else %}
+        <a href="{{ url_for('login') }}">Login with Entra ID</a>
+    {% endif %}
 </body>
 </html>
