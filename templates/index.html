@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Azure Blob Storage</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Azure Blob Storage</h1>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="file">
+        <button type="submit">Upload</button>
+    </form>
+    <ul>
+        {% for blob in blobs %}
+        <li>
+            <a href="{{ url_for('download', blob_name=blob.name) }}">{{ blob.name }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
