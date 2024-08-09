@@ -5,10 +5,15 @@ import msal
 from flask_session import Session
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'
+
+# Set secret key from environment variable
+app.secret_key = os.getenv('CLIENT_SECRET')
 
 # Load configuration from config.py
 app.config.from_object('config')
+
+# Override CLIENT_SECRET with environment variable
+app.config['CLIENT_SECRET'] = os.getenv('CLIENT_SECRET')
 
 # Initialize BlobServiceClient
 blob_service_client = BlobServiceClient.from_connection_string(app.config['AZURE_STORAGE_CONNECTION_STRING'])
